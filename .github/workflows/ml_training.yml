@@ -1,0 +1,29 @@
+#Name of the github actions workflow
+
+name: ML model training pipeline 
+
+#Define the trigger for this workflow 
+
+on: 
+  push:       #Run the event on PUSH
+    branches: ["main"]  #Only when the code is pushed to main branch 
+
+    #Define the set of jobs to run 
+    jobs: 
+      build:           #Job name 
+      runs-on: ubuntu-latest
+        steps: 
+        #Step1 - check out the repository code so its available in the VM 
+        - sname: Checkout repository 
+          uses: actions/checkout@v4
+
+      # Step 2: Set up a Python environment
+        - name: Set up Python
+          uses: actions/setup-python@v5
+          with:
+          python-version: "3.10"   # Specify Python version
+    # Step 3: Install dependencies from requirements.txt
+        - name: Install dependencies
+          run: |
+            python -m pip install --upgrade pip   # Upgrade pip to latest version
+            pip install -r requirements.txt       # Install project dependencies
